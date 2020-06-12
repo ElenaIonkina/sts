@@ -1,5 +1,6 @@
 const { sendFailAddCardEvent, sendPendingAddCardEvent, sendAddCardEvent } = require('../../../socket/controllers/card');
 const { getPaymentInfo } = require('../../api/payTabsApi');
+const { getTransactionInfo } = require('../../api/tapAPI');
 const { SUCCESS, NOT_FOUND } = require('../../helpers/const/PaytabsResponseCodes');
 const scheduleRefundAddCard = require('../schedulers/refundAddCardScheduler');
 const scheduleSaveCard = require('../schedulers/saveCardScheduler');
@@ -16,9 +17,10 @@ function getCardData(orderData) {
     };
 }
 
-module.exports = async function processPaymentHook(models, { orderData, orderId }) {
+module.exports = async function processPaymentHook(models, { chargeId, parsedOrderId }) {
     try {
-        const { lessonId, orderId: orderIdString } = orderId;
+        console.log(chargeId);
+        const { lessonId, orderId: orderIdString } = parsedOrderId;
         const lesson = await models.Lesson.findOne({ where: { id: lessonId } });
         const userId = lesson.baseUserId;
         const user = await models.BaseUser.findById(userId);
@@ -26,22 +28,24 @@ module.exports = async function processPaymentHook(models, { orderData, orderId 
     /*       const cardData = getCardData(orderData);
         if (!cardData) return sendFailAddCardEvent(userId); */
 
-        const paymentRef = orderData['payment_reference'];
-        const paymentInfo = await getPaymentInfo(paymentRef);
-        if (paymentInfo['reference_no'] !== orderId['orderId']) return;
-        const responseCode = paymentInfo['response_code'];
-        if (responseCode === NOT_FOUND) return;
-        if (responseCode !== SUCCESS) return sendFailAddCardEvent(userId);
-        const transactionId = paymentInfo['transaction_id'];
+        // const paymentRef = orderData['payment_reference'];
+        // const paymentInfo = await getPaymentInfo(paymentRef);
+        // if (paymentInfo['reference_no'] !== orderId['orderId']) return;
+        const paymentInfo = await getTransactionInfo(chargeId);
+        const status = paymentInfo['status'];
+        if (!status) return;
+        // if (status === NOT_FOUND) return;
+        if (status !== 'CAPTURED') return sendFailAddCardEvent(userId);
+        const transactionId = paymentInfo['id'];
 
         await Promise.all([
             sendAddCardEvent(userId, null, null),
-            await models.TransactionInfo.updateAll({ orderId: orderId['orderId'], lessonId: lessonId }, { transactionId: transactionId }),
+            await models.TransactionInfo.updateAll({ orderId: parsedOrderId['orderId'], lessonId: lessonId }, { transactionId: transactionId }),
 /*          scheduleRefundAddCard(models, transactionId, orderIdString),
             scheduleSaveCard(models, transactionId, orderIdString, paymentRef, cardData, userId),*/
         ]);
     } catch (e) {
-        sendPendingAddCardEvent(orderId.userId);
+        sendPendingAddCardEvent(parsedOrderId.userId);
         throw e;
     }
 };

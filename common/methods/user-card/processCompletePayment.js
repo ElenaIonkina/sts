@@ -4,14 +4,13 @@ const scheduleProcessPaymentHook = require('../../../src/tasksScheduler/schedule
 
 const PROCESSING = 'Processing...';
 
-module.exports = async function processPayment(req, orderId) {
+module.exports = async function processPayment(tap_id, orderId) {    
     const parsedOrderId = parseOrderId(orderId);
-    const { body } = req;
-    const isNotPaymentRequest = !parsedOrderId || !body ||
-        !body['payment_reference'] || typeof body['payment_reference'] !== 'string';
+    const chargeId = tap_id;    
+    const isNotPaymentRequest = !parsedOrderId || !tap_id;
     if (isNotPaymentRequest) return null;
     await runMySQLTransactions(async (models) => {
-        await scheduleProcessPaymentHook(models, req.body, parsedOrderId);
+        await scheduleProcessPaymentHook(models, chargeId, parsedOrderId);
     });
     return PROCESSING;
 };

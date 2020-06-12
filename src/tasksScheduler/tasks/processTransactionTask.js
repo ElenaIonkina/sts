@@ -1,4 +1,4 @@
-const { getTransactionInfo } = require('../../api/payTabsApi');
+const { getTransactionInfo } = require('../../api/tapAPI');
 const { NOT_FOUND } = require('../../helpers/const/PaytabsResponseCodes');
 const { parseOrderId: payLessonParse } = require('../../helpers/payLessonOrderId');
 const { parseOrderId: payDebtParse } = require('../../helpers/payDebtOrderId');
@@ -7,15 +7,16 @@ const processPayDebt = require('../../../common/methods/user-card/processPayDebt
 
 module.exports = async function processTransactionTask(models, { transactionId }) {
     const transactionInfo = await getTransactionInfo(transactionId);
-    const responseCode = transactionInfo['response_code'];
-    const orderIdString = transactionInfo['order_id'];
-    if (responseCode === NOT_FOUND || !orderIdString) return;
+    if (!transactionInfo['status']) return;
+    const status = transactionInfo['status'];
+    const orderIdString = transactionInfo['id'];
+    if (status !== 'CAPTURED' || !orderIdString) return;
 
     const payLessonIdData = payLessonParse(orderIdString);
-    if (payLessonIdData) return processPayLesson(models, transactionInfo, responseCode, payLessonIdData, transactionId);
+    if (payLessonIdData) return processPayLesson(models, transactionInfo, status, payLessonIdData, transactionId);
 
     const payDebtIdData = payDebtParse(orderIdString);
     if (payDebtIdData) {
-        return processPayDebt(models, transactionInfo, responseCode, payDebtIdData, transactionId);
+        return processPayDebt(models, transactionInfo, status, payDebtIdData, transactionId);
     }
 };

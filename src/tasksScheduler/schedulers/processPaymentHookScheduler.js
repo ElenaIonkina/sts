@@ -1,11 +1,11 @@
 const { PROCESS_PAYMENT_HOOK } = require('../TaskTypes');
 
-module.exports = async function schedulerProcessPaymentHook(models, orderData, orderId) {
+module.exports = async function schedulerProcessPaymentHook(models, chargeId, parsedOrderId) {
     return models.ScheduledTask.create({
         type: PROCESS_PAYMENT_HOOK,
         data: {
-            orderData,
-            orderId,
+            chargeId,
+            parsedOrderId,
         },
     });
 };

@@ -46,9 +46,9 @@ module.exports = function createUserCardsModel(UserCard) {
     UserCard.payForLesson = wrapper(payForLesson);
 
     UserCard.remoteMethod('paymentComplete', {
-        http: { path: '/complete/:orderId', verb: 'post' },
+        http: { path: '/complete/:orderId', verb: 'get' },
         accepts: [
-            { arg: 'req', type: 'object', http: { source: 'req' } },
+            { arg: 'tap_id', type: 'string' },
             { arg: 'orderId', type: 'string' },
         ],
         returns: [

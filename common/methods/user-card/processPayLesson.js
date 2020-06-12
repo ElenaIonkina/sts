@@ -4,12 +4,12 @@ const { dropCallWithDebt } = require('../../../socket/controllers/calls');
 const { dropValue } = require('../../../src/datasource/redis/endpoints/common');
 const { getLessonPaymentProcessingKey } = require('../../../src/datasource/redis/endpoints/lessonPaymentProcessings');
 
-module.exports = async function processPayLesson(models, transactionInfo, responseCode, orderIdData, transactionId) {
+module.exports = async function processPayLesson(models, transactionInfo, status, orderIdData, transactionId) {
     const { lessonId, orderId, paymentNumber } = orderIdData;
     const amount = Number(transactionInfo.amount);
     const { currency } = transactionInfo;
     const key = getLessonPaymentProcessingKey(lessonId, paymentNumber);
-    if (responseCode !== SUCCESS) {
+    if (status !== 'CAPTURED') {
         const { baseUserId } = await models.Lesson.findById(lessonId);
         await Promise.all([
             models.Debt.findOrCreate({
