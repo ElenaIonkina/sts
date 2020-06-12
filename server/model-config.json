@@ -1,0 +1,518 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../node_modules/loopback-ds-timestamp-mixin",
+      "../node_modules/loopback-cascade-delete-mixin",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "db",
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "AccessToken": {
+    "dataSource": "mysql",
+    "public": false,
+    "relations": {
+      "user": {
+        "type": "belongsTo",
+        "model": "BaseUser",
+        "foreignKey": "userId"
+      }
+    },
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "BaseUser": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "signUp": true,
+          "userInfo": true,
+          "becomeTutor": true,
+          "deleteUserById": true,
+          "deleteUser": true,
+          "fetchListOfUsers": true,
+          "userLogout": true,
+          "getUserInfoById": true,
+          "patchUser": true,
+          "updateBillingInfo": true,
+          "blockUser": true,
+          "unblockUser": true,
+          "fetchUsersCount": true
+        }
+      }
+    }
+  },
+  "UserCard": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "getCards": true,
+          "transactionHook": true,
+          "deleteCard": true,
+          "tryPayDebt": true,
+          "payForLesson": true,
+          "paymentComplete": true,
+          "setDefault": true,
+          "addCard": true
+        }
+      }
+    }
+  },
+  "DeviceToken": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "TransactionInfo": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "createTransaction" : true
+        }
+      }
+    }
+  },
+  "Debt": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "Message": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "postChatPicture": true,
+          "getPast": true,
+          "postChatMessage": true
+        }
+      }
+    }
+  },
+  "Phone": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "sendVerificationCode": true,
+          "verifyCode": true,
+          "verifyUpdatePhoneCode": true,
+          "sendUpdatePhoneCode": true
+        }
+      }
+    }
+  },
+  "Settings": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "TestFeatures": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "testVerifyCode": true
+        }
+      }
+    }
+  },
+  "VideoCall": {
+    "dataSource": null,
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "acceptCall": true,
+          "declineCall": true,
+          "sendOffer": true,
+          "sendMicrophoneOff": true,
+          "sendCameraOff": true,
+          "sendCandidate": true,
+          "sendAppClosed": true,
+          "extendCall": true,
+          "stopCall": true,
+          "getCredentials": true,
+          "stopCallWithReason": true,
+          "cancelCall": true
+        }
+      }
+    }
+  },
+  "University": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "fetchUniversities": true
+        }
+      }
+    }
+  },
+  "LessonPhoto": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "LessonRating": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "ShareToken": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "Lesson": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "createRequest": true,
+          "rateLesson": true,
+          "removeRequest": true,
+          "fetchRequests": true,
+          "getRequest": true,
+          "getPastLessonsList": true,
+          "getRequests": true,
+          "getLink": true,
+          "getAccess": true,
+          "getPrice": true,
+          "fetchRequestsForTutor": true,
+          "getPastLessons": true,
+          "sendProposal": true,
+          "shareLesson": true,
+          "selectTutor": true,
+          "startLesson": true,
+          "getUpcomingLessons": true,
+          "tutorWatch": true
+        }
+      }
+    }
+  },
+  "Friend": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "removeFriend": true,
+          "getFriendsList": true,
+          "addFriend": true
+        }
+      }
+    }
+  },
+  "Subject": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "getSubjects": true
+        }
+      }
+    }
+  },
+  "SubjectTranslation": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "Language": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "getLanguages": true
+        }
+      }
+    }
+  },
+  "TutorLanguage": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "LessonLanguage": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "LanguageTranslation": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "FriendsLessons": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "SharedLesson": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "ScheduledTask": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "Tutor": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "getBecomeTutorStatus": true,
+          "enableTutor": true,
+          "putSettings": true,
+          "disableTutor": true
+        }
+      }
+    }
+  },
+  "Photo": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "TutorSubject": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false
+        }
+      }
+    }
+  },
+  "Admin": {
+    "dataSource": null,
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "login": true,
+          "checkSession": true,
+          "logout": true,
+          "contactUs": true
+        }
+      }
+    }
+  },
+  "Proposal": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "getSubmittedProposals": true
+        }
+      }
+    }
+  },
+  "ServiceKeys": {
+    "dataSource": "mysql",
+    "public": true,
+    "options": {
+      "remoting": {
+        "context": false,
+        "sharedMethods": {
+          "*": false,
+          "getSupportNumber": true
+        }
+      }
+    }
+  },
+  "Email": {
+    "dataSource": "email"
+  },
+  "CommonModels": {
+    "public": false,
+    "dataSource": false
+  }
+}

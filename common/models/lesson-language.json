@@ -1,0 +1,32 @@
+{
+  "name": "LessonLanguage",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+  },
+  "validations": [],
+  "relations": {
+    "lesson": {
+      "type": "belongsTo",
+      "model": "Lesson",
+      "foreignKey": "lessonId"
+    },
+    "language": {
+      "type": "belongsTo",
+      "model": "Language",
+      "foreignKey": "languageId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

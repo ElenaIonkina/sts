@@ -1,0 +1,58 @@
+{
+  "name": "TransactionInfo",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": false
+  },
+  "properties": {
+    "amount": {
+      "type": "number",
+      "dataType": "decimal",
+      "required": true,
+      "precision": 10,
+      "scale": 2
+    },
+    "currency" : {
+      "type": "string",
+      "required": true
+    },
+    "transactionId": {
+      "type": "string",
+      "required": false
+    },
+    "orderId": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "mixins": {
+    "TimeStamp": {
+      "createdAt": "createdOn",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "lesson": {
+      "type": "belongsTo",
+      "model": "Lesson"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "createTransaction"
+    }
+  ],
+  "methods": {}
+}

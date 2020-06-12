@@ -1,0 +1,245 @@
+{
+  "name": "BaseUser",
+  "plural": "base-user",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "excludeBaseProperties": [
+    "realm",
+    "name",
+    "username",
+    "emailVerified",
+    "verificationToken"
+  ],
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "required": true,
+      "default": ""
+    },
+    "lastName": {
+      "type": "string",
+      "default": ""
+    },
+    "email": {
+      "type": "string",
+      "default": ""
+    },
+    "country": {
+      "type": "string",
+      "required": true,
+      "default": ""
+    },
+    "city": {
+      "type": "string",
+      "default": ""
+    },
+    "university": {
+      "type": "string",
+      "required": true,
+      "default": ""
+    },
+    "grade": {
+      "type": "number",
+      "required": true,
+      "default": ""
+    },
+    "countryCode": {
+      "type": "string",
+      "default": ""
+    },
+    "state": {
+      "type": "string"
+    },
+    "postalCode": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    },
+    "userStatus": {
+      "type": "string",
+      "default": "active"
+    },
+    "role": {
+      "type": "string",
+      "required": true,
+      "default": "student"
+    },
+    "lastSeenAt": {
+      "type": "number",
+      "length": 8,
+      "default": 1,
+      "mysql": {
+        "dataType": "BIGINT"
+      }
+    },
+    "deletedAt": {
+      "type": "number",
+      "length": 8,
+      "mysql": {
+        "dataType": "BIGINT"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+    "tutor": {
+      "type": "hasOne",
+      "model": "Tutor",
+      "foreignKey": ""
+    },
+    "lessons": {
+      "type": "hasMany",
+      "model": "Lesson"
+    },
+    "cards": {
+      "type": "hasMany",
+      "model": "UserCard"
+    },
+    "phone": {
+      "type": "hasOne",
+      "model": "Phone",
+      "foreignKey": ""
+    },
+    "settings": {
+      "type": "hasOne",
+      "model": "Settings",
+      "foreignKey": ""
+    },
+    "friends": {
+      "type": "hasMany",
+      "model": "Friend",
+      "foreignKey": "userId"
+    },
+    "friendsAdded": {
+      "type": "hasMany",
+      "model": "Friend",
+      "foreignKey": "friendId"
+    },
+    "tutorLessons": {
+      "type": "hasMany",
+      "model": "Lesson",
+      "foreignKey": "tutorId",
+      "through": "Proposal"
+    },
+    "language": {
+      "type": "belongsTo",
+      "model": "Language",
+      "foreignKey": "languageId"
+    },
+    "avatar": {
+      "type": "belongsTo",
+      "model": "Photo"
+    },
+    "defaultCard": {
+      "type": "belongsTo",
+      "model": "UserCard"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "signUp"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "MayBeDebtor",
+      "permission": "ALLOW",
+      "property": "userInfo"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Student",
+      "permission": "ALLOW",
+      "property": "becomeTutor"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Admin",
+      "permission": "ALLOW",
+      "property": "fetchListOfUsers"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Admin",
+      "permission": "ALLOW",
+      "property": "fetchUsersCount"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Admin",
+      "permission": "ALLOW",
+      "property": "deleteUserById"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Admin",
+      "permission": "ALLOW",
+      "property": "blockUser"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Admin",
+      "permission": "ALLOW",
+      "property": "unblockUser"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "userLogout"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "MayBeDebtor",
+      "permission": "ALLOW",
+      "property": "patchUser"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Admin",
+      "permission": "ALLOW",
+      "property": "getUserInfoById"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property": "deleteUser"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "MayBeDebtor",
+      "permission": "ALLOW",
+      "property": "updateBillingInfo"
+    }
+  ],
+  "methods": {}
+}

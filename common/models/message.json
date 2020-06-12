@@ -1,0 +1,64 @@
+{
+  "name": "Message",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": false
+  },
+  "properties": {
+    "text" : {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "lesson": {
+      "type": "belongsTo",
+      "model": "Lesson"
+    },
+    "baseUser": {
+      "type": "belongsTo",
+      "model": "BaseUser"
+    },
+    "photo": {
+      "type": "belongsTo",
+      "model": "Photo"
+    }
+  },
+  "mixins": {
+    "TimeStamp": {
+      "createdAt": "createdOn",
+      "required": false
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property" : "postChatMessage"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property" : "postChatPicture"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property" : "getPast"
+    }
+  ],
+  "methods": {}
+}

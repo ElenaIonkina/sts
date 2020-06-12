@@ -1,0 +1,295 @@
+{
+  "name": "Lesson",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": false
+  },
+  "mixins": {
+    "CascadeDelete": {
+      "relations": [
+        "friends",
+        "lessonPhotos",
+        "lessonScheduledTask"
+      ]
+    },
+    "TimeStamp": {
+      "createdAt": "createdOn",
+      "required": false
+    }
+  },
+  "properties": {
+    "description": {
+      "type": "string"
+    },
+    "recordingPath": {
+      "type": "string"
+    },
+    "recordingUrl": {
+      "type": "string"
+    },
+    "urgency": {
+      "type": "string",
+      "required": true
+    },
+    "priceInTimeUnitInDollars": {
+      "type": "number",
+      "dataType": "decimal",
+      "precision": 10,
+      "scale": 2
+    },
+    "finished": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "startTime": {
+      "type": "number",
+      "length": 8,
+      "mysql": {
+        "dataType": "BIGINT"
+      }
+    },
+    "timeTo": {
+      "type": "number",
+      "required": true,
+      "length": 8,
+      "mysql": {
+        "dataType": "BIGINT"
+      }
+    },
+    "timeFrom": {
+      "type": "number",
+      "required": true,
+      "length": 8,
+      "mysql": {
+        "dataType": "BIGINT"
+      }
+    },
+    "duration": {
+      "type": "number",
+      "required": true
+    },
+    "url": {
+      "type": "string"
+    },
+    "isPublic": {
+      "type": "boolean",
+      "required": true
+    },
+    "countWatch": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    },
+    "expiredAt": {
+      "type": "number",
+      "length": 8,
+      "mysql": {
+        "dataType": "BIGINT"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+    "baseUser": {
+      "type": "belongsTo",
+      "model": "BaseUser",
+      "foreignKey": ""
+    },
+    "subject": {
+      "type": "belongsTo",
+      "model": "Subject",
+      "foreignKey": ""
+    },
+    "friends": {
+      "type": "hasMany",
+      "model": "FriendsLessons"
+    },
+    "lessonPhotos": {
+      "type": "hasMany",
+      "model": "LessonPhoto",
+      "foreignKey": ""
+    },
+    "lessonScheduledTask": {
+      "type": "hasOne",
+      "model": "ScheduledTask",
+      "foreignKey": "lessonId"
+    },
+    "proposals": {
+      "type": "hasMany",
+      "model": "Tutor",
+      "foreignKey": "lessonId",
+      "through": "Proposal"
+    },
+    "messages": {
+      "type": "hasMany",
+      "model": "Message",
+      "foreignKey": "lessonId"
+    },
+    "proposalsNoTutor": {
+      "type": "hasMany",
+      "model": "Proposal",
+      "foreignKey": "lessonId"
+    },
+    "lessonLanguages": {
+      "type": "hasMany",
+      "model": "Language",
+      "foreignKey": "lessonId",
+      "through": "LessonLanguage"
+    },
+    "subjectTranslations": {
+      "type": "hasMany",
+      "model": "SubjectTranslation",
+      "foreignKey": "subjectId",
+      "primaryKey": "subjectId"
+    },
+    "tutor": {
+      "type": "belongsTo",
+      "model": "Tutor"
+    },
+    "card": {
+      "type": "belongsTo",
+      "model": "UserCard"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Student",
+      "permission": "ALLOW",
+      "property": "createRequest"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Student",
+      "permission": "ALLOW",
+      "property": "rateLesson"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Student",
+      "permission": "ALLOW",
+      "property": "removeRequest"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Student",
+      "permission": "ALLOW",
+      "property": "fetchRequests"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Student",
+      "permission": "ALLOW",
+      "property": "getRequest"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Tutor",
+      "permission": "ALLOW",
+      "property": "fetchRequestsForTutor"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Tutor",
+      "permission": "ALLOW",
+      "property": "sendProposal"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Tutor",
+      "permission": "ALLOW",
+      "property": "tutorWatch"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property": "selectTutor"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property": "getUpcomingLessons"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property": "startLesson"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property": "getLink"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property": "getPastLessons"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Admin",
+      "permission": "ALLOW",
+      "property": "getRequests"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property": "shareLesson"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Admin",
+      "permission": "ALLOW",
+      "property": "getPastLessonsList"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property": "getAccess"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "getPrice"
+    }
+  ],
+  "methods": {}
+}

@@ -1,0 +1,59 @@
+{
+  "name": "Friend",
+  "plural": "friend",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "friend": {
+      "type": "belongsTo",
+      "model": "BaseUser",
+      "foreignKey": ""
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "BaseUser",
+      "foreignKey": ""
+    },
+    "lessons": {
+      "type": "hasMany",
+      "model": "Lesson",
+      "foreignKey": "lessonId",
+      "through": "FriendsLessons"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property": "addFriend"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property": "removeFriend"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property": "getFriendsList"
+    }
+  ],
+  "methods": {}
+}

@@ -1,0 +1,93 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - /data/tutoring/mysql/release:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=tutoring
+
+  redis:
+    image: redis:5.0.5
+    command: redis-server --requirepass ${REDIS_PASS}
+    restart: always
+    ports:
+      - 6379:6379
+
+  kms:
+    image: kurento/kurento-media-server:6
+    restart: always
+    links:
+      - turn
+    depends_on:
+      - turn
+    environment:
+      - KMS_TURN_URL
+      - KMS_STUN_PORT=3478
+      - KMS_STUN_IP=turn
+    volumes:
+      - /data/tutoring/recordings/release:/data/tutoring/recordings
+
+  turn:
+    restart: always
+    image: registry.s2.git.fora-soft.com/forasoft/turn-server:latest
+    command: "${TURN_LOGIN} ${TURN_PASS} tutoring"
+    ports:
+      - 3478:3478
+      - 3478:3478/udp
+
+  backend:
+    restart: always
+    build: ./
+    depends_on:
+      - db
+      - redis
+      - kms
+    links:
+      - db
+      - redis
+      - kms
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=tutoring
+      - EMAIL_USER
+      - EMAIL_PASSWORD
+      - BRANCH_IO_KEY=${BRANCH_IO_KEY_PRODUCTION}
+      - STUN_IP=78.46.107.230
+      - REDIS_PASS
+      - REDIS_HOST=redis
+      - INSTANCE_NAME=production
+      - TURN_IP=stsapp.net
+      - TURN_PORT=3478
+      - STUN_PORT=3478
+      - CLEAN_RECORDINGS=0
+      - WEB_CLIENT_URL=https://stsapp.net
+      - MIGRATE_COUNTRY_CODES=1
+      - PAY_TABS_SITE_URL=stsapp.net
+      - PROCESS_ADD_CARD_URL=https://stsapp.net/api/v0/UserCards/complete
+      - SERVER_IP=stsapp.net
+      - PAY_TABS_KEY=${PAY_TABS_KEY_PROD}
+      - PAY_TABS_EMAIL=${PAY_TABS_EMAIL_PROD}
+      - NO_REFUND=1
+      - S3_ACCESS_KEY_ID
+      - S3_SECRET_ACCESS_KEY
+      - REGION=us-east-1
+      - IS_USING_S3=1
+      - BUCKET_NAME=tutoring-app-recordings
+      - TWILIO_ACCOUNT_SID
+      - TWILIO_ACUTH_TOKEN
+      - TWILIO_PHONE_NUMBER_FOF_SMS
+      - production=true
+      - TURN_LOGIN
+      - TURN_PASS
+    ports:
+      - 3000:3000
+    volumes:
+      - /data/tutoring/static/release:/data/tutoring/static
+      - /data/tutoring/recordings/release:/data/tutoring/recordings

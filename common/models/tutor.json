@@ -1,0 +1,99 @@
+{
+  "name": "Tutor",
+  "plural": "tutor",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": false
+  },
+  "mixins": {
+    "CascadeDelete": {
+      "relations": [
+        "photoOfficialId",
+        "photoOfficialTranscript"
+      ]
+    },
+    "TimeStamp": {
+      "createdAt": "createdOn",
+      "required": false
+    }
+  },
+  "properties": {
+    "status": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "baseUser": {
+      "type": "belongsTo",
+      "model": "BaseUser",
+      "foreignKey": ""
+    },
+    "photoOfficialId": {
+      "type": "belongsTo",
+      "model": "Photo",
+      "foreignKey": ""
+    },
+    "photoOfficialTranscript": {
+      "type": "belongsTo",
+      "model": "Photo",
+      "foreignKey": ""
+    },
+    "subjects": {
+      "type": "hasMany",
+      "model": "Subject",
+      "foreignKey": "tutorId",
+      "through": "TutorSubject"
+    },
+    "lessons" : {
+      "type": "hasMany",
+      "model": "Lesson",
+      "foreignKey" : "tutorId",
+      "through": "Proposal"
+    },
+    "tutorLanguages": {
+      "type": "hasMany",
+      "model": "Language",
+      "foreignKey": "tutorId",
+      "through": "TutorLanguage"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Student",
+      "permission": "ALLOW",
+      "property": "getBecomeTutorStatus"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Admin",
+      "permission": "ALLOW",
+      "property": "enableTutor"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Admin",
+      "permission": "ALLOW",
+      "property": "disableTutor"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Admin",
+      "permission": "ALLOW",
+      "property": "putSettings"
+    }
+  ],
+  "methods": {}
+}

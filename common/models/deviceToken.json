@@ -1,0 +1,35 @@
+{
+  "name": "DeviceToken",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": false
+  },
+  "mixins": {
+    "TimeStamp": {
+      "createdAt": "createdOn"
+    }
+  },
+  "properties": {
+    "device": {
+      "type": "string",
+      "required": true
+    },
+    "accessTokenId": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

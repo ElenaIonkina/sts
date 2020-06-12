@@ -1,0 +1,49 @@
+{
+  "name": "Language",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "code": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "languageTranslations": {
+      "type": "hasMany",
+      "model": "LanguageTranslation",
+      "foreignKey": "languageId"
+    },
+    "lessons": {
+      "type": "hasMany",
+      "model": "Lesson",
+      "foreignKey": "languageId",
+      "through": "LessonLanguage"
+    },
+    "tutors": {
+      "type": "hasMany",
+      "model": "Tutor",
+      "foreignKey": "languageId",
+      "through": "LessonLanguage"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "getLanguages"
+    }
+  ],
+  "methods": {}
+}

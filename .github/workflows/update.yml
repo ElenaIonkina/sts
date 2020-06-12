@@ -1,0 +1,28 @@
+name: docker-compose-actions-workflow
+on:
+  push:
+    branches:
+      - production
+jobs:
+  update:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: docker-compose up -d --force-recreate --build
+        env:
+          TURN_LOGIN: ${{ secrets.TURN_LOGIN }}
+          TURN_PASS: ${{ secrets.TURN_PASS }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          BRANCH_IO_KEY_PRODUCTION: ${{ secrets.BRANCH_IO_KEY_PRODUCTION }}
+          REDIS_PASS: ${{ secrets.REDIS_PASS }}
+          REDIS_HOST: ${{ secrets.REDIS_HOST }}
+          PAY_TABS_KEY_PROD: ${{ secrets.PAY_TABS_KEY_PROD }}
+          PAY_TABS_EMAIL_PROD: ${{ secrets.PAY_TABS_EMAIL_PROD }}
+          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_ACUTH_TOKEN: ${{ secrets.TWILIO_ACUTH_TOKEN }}
+          TWILIO_PHONE_NUMBER_FOF_SMS: ${{ secrets.TWILIO_PHONE_NUMBER_FOF_SMS }}

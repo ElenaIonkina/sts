@@ -1,0 +1,46 @@
+{
+  "name": "LessonPhoto",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "originalPath": {
+      "type": "string"
+    },
+    "originalUrl": {
+      "type": "string"
+    },
+    "previewUrl": {
+      "type": "string"
+    },
+    "previewPath": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "lesson": {
+      "type": "belongsTo",
+      "model": "Lesson",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "function"
+    }
+  ],
+  "methods": {}
+}

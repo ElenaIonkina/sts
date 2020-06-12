@@ -1,0 +1,31 @@
+{
+  "name": "TutorSubject",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "subject": {
+      "type": "belongsTo",
+      "model": "Subject",
+      "foreignKey": "subjectId"
+    },
+    "tutor": {
+      "type": "belongsTo",
+      "model": "Tutor",
+      "foreignKey": "tutorId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

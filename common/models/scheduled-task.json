@@ -1,0 +1,36 @@
+{
+  "name": "ScheduledTask",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "type": {
+      "type": "string",
+      "required": true
+    },
+    "time": {
+      "type": "date"
+    },
+    "attempts": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    },
+    "data": {
+      "dataType": "TEXT"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

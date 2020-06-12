@@ -1,0 +1,32 @@
+{
+  "restApiRoot": "/api",
+  "host": "0.0.0.0",
+  "storageFilesPath": "/data/tutoring/static",
+  "storageRecordingsPath": "/data/tutoring/recordings/files",
+  "frontendUrl": "",
+  "port": 3000,
+  "cookieParserParamsValue": "cookieParserParamsValue",
+  "expressSessionSecretValue": "expressSessionSecretValue",
+  "twilioAccountSid": "ACe7f09be8840dde7e919d7dab85a789fe",
+  "twilioAcuthToken": "fbede444708867a34621338838174a04",
+  "twilioPhoneNumberForSms": "+15304028502",
+  "remoting": {
+    "context": false,
+    "rest": {
+      "handleErrors": false,
+      "normalizeHttpPath": false,
+      "xml": false
+    },
+    "json": {
+      "strict": false,
+      "limit": "100kb"
+    },
+    "urlencoded": {
+      "extended": true,
+      "limit": "100kb"
+    },
+    "cors": false
+  },
+  "projectName": "tutoring app",
+  "contactEmail": "tutoring.app@app.com"
+}

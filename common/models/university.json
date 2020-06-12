@@ -1,0 +1,41 @@
+{
+  "name": "University",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "length": 255
+    },
+    "country": {
+      "type": "string",
+      "length": 75
+    },
+    "alphaTwoCode": {
+      "type": "string",
+      "length": 2
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "fetchUniversities"
+    }
+  ],
+  "methods": {}
+}

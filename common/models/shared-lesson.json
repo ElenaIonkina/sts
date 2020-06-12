@@ -1,0 +1,31 @@
+{
+  "name": "SharedLesson",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "baseUser": {
+      "type": "belongsTo",
+      "model": "BaseUser",
+      "foreignKey": "userId"
+    },
+    "lesson": {
+      "type": "belongsTo",
+      "model": "Lesson",
+      "foreignKey": "lessonId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

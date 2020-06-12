@@ -1,0 +1,34 @@
+{
+  "name": "LanguageTranslation",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "translation": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "language": {
+      "type": "belongsTo",
+      "model": "Language"
+    },
+    "translationLanguage": {
+      "type": "belongsTo",
+      "model": "Language",
+      "foreignKey": "translationLanguageId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

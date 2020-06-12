@@ -1,0 +1,32 @@
+{
+  "name": "TutorLanguage",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+  },
+  "validations": [],
+  "relations": {
+    "tutor": {
+      "type": "belongsTo",
+      "model": "Tutor",
+      "foreignKey": "tutorId"
+    },
+    "language": {
+      "type": "belongsTo",
+      "model": "Language",
+      "foreignKey": "languageId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

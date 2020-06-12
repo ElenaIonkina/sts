@@ -1,0 +1,36 @@
+{
+  "name": "LessonRating",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "rate": {
+      "type": "number",
+      "default": 0,
+      "required": true,
+      "length": 3,
+      "mysql": {
+        "dataType": "INT"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+    "lesson": {
+      "type": "belongsTo",
+      "model": "Lesson",
+      "foreignKey": "lessonId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

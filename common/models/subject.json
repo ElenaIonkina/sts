@@ -1,0 +1,55 @@
+{
+  "name": "Subject",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "level": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "lessons": {
+      "type": "hasMany",
+      "model": "Lesson",
+      "foreignKey": ""
+    },
+    "baseSubject": {
+      "type": "belongsTo",
+      "model": "Subject"
+    },
+    "tutors": {
+      "type": "hasMany",
+      "model": "BecomeTutorRequest",
+      "foreignKey": "",
+      "through": "TutorSubject"
+    },
+    "subjectTranslations": {
+      "type": "hasMany",
+      "model": "SubjectTranslation",
+      "foreignKey": "subjectId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "CommonUser",
+      "permission": "ALLOW",
+      "property": "getSubjects"
+    }
+  ],
+  "methods": {}
+}

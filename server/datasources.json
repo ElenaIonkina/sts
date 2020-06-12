@@ -1,0 +1,25 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mysql": {
+    "host": "",
+    "port": 0,
+    "url": "",
+    "database": "",
+    "password": "",
+    "name": "mysql",
+    "user": "root",
+    "connectTimeout": 20000,
+    "acquireTimeout": 20000,
+    "connector": "mysql",
+    "charset": "utf8mb4",
+    "collation": "utf8mb4_general_ci"
+
+  },
+  "email": {
+    "connector": "mail",
+    "name": "email"
+  }
+}

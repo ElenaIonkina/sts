@@ -1,0 +1,47 @@
+{
+  "name": "Settings",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "allowPush": {
+      "type": "boolean",
+      "default": true
+    },
+    "allowProposalPush": {
+      "type": "boolean",
+      "default": true
+    },
+    "allowRequestDeletePush": {
+      "type": "boolean",
+      "default": true
+    },
+    "allowNewLessonPush": {
+      "type": "boolean",
+      "default": true
+    },
+    "allowRequestPush": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "BaseUser",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}
