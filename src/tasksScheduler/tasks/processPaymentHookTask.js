@@ -5,6 +5,7 @@ const { SUCCESS, NOT_FOUND } = require('../../helpers/const/PaytabsResponseCodes
 const scheduleRefundAddCard = require('../schedulers/refundAddCardScheduler');
 const scheduleSaveCard = require('../schedulers/saveCardScheduler');
 const logger = require('../../utils/logger');
+const { parse } = require('cookie');
 function getCardData(orderData) {
     const cardEmail = orderData['pt_customer_email'];
     const cardPass = orderData['pt_customer_password'];
@@ -19,8 +20,8 @@ function getCardData(orderData) {
 
 module.exports = async function processPaymentHook(models, { chargeId, parsedOrderId }) {
     try {
-        console.log(chargeId);
-        const { lessonId, orderId: orderIdString } = parsedOrderId;
+        const { lessonId } = parsedOrderId;
+        const orderId = parsedOrderId['orderId']
         const lesson = await models.Lesson.findOne({ where: { id: lessonId } });
         const userId = lesson.baseUserId;
         const user = await models.BaseUser.findById(userId);
@@ -40,7 +41,7 @@ module.exports = async function processPaymentHook(models, { chargeId, parsedOrd
 
         await Promise.all([
             sendAddCardEvent(userId, null, null),
-            await models.TransactionInfo.updateAll({ orderId: parsedOrderId['orderId'], lessonId: lessonId }, { transactionId: transactionId }),
+            await models.TransactionInfo.updateAll({ orderId: orderId, lessonId: lessonId }, { transactionId: transactionId }),
 /*          scheduleRefundAddCard(models, transactionId, orderIdString),
             scheduleSaveCard(models, transactionId, orderIdString, paymentRef, cardData, userId),*/
         ]);

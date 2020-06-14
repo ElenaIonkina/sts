@@ -28,10 +28,10 @@ module.exports = async function payForLesson(req, lessonId) {
         lessonId,
         orderId,
     });
-    const link = await chargeNewCard(user, phone, userIp, orderId, amount, currency);
+    // const link = await chargeNewCard(user, phone, userIp, orderId, amount, currency);
     return {
         result: {
-            link,
+            link: orderId,
         },
     };
 };
