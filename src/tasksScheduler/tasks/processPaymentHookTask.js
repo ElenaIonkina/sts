@@ -37,7 +37,6 @@ module.exports = async function processPaymentHook(models, { chargeId, parsedOrd
         if (!status) return;
         // if (status === NOT_FOUND) return;
         if (status !== 'CAPTURED') return sendFailAddCardEvent(userId);
-        const transactionId = paymentInfo['id'];
 
         await Promise.all([
             sendAddCardEvent(userId, null, null),

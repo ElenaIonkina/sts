@@ -12,10 +12,10 @@ module.exports = async function payForLesson(req, lessonId) {
     const { userId } = req.accessToken;
     const user = await this.app.models.BaseUser.findById(userId, { include: 'phone' });
     const { phone } = user.phone();
-    const isUserCanAddCard = hasEveryKey(user, USER_FIELDS_TO_ADD_CARD) && phone;
-    if (!isUserCanAddCard) {
-        throw new InvalidBillingInformationError();
-    }
+    //const isUserCanAddCard = hasEveryKey(user, USER_FIELDS_TO_ADD_CARD) && phone;
+    // if (!isUserCanAddCard) {
+    //     throw new InvalidBillingInformationError();
+    // }
     const userIp = getRequestIp(req);
 
     const lesson = await this.app.models.Lesson.findById(lessonId);
