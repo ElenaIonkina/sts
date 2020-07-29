@@ -61,7 +61,7 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "eslint": "^3.17.1",
+    "eslint": "^4.18.2",
     "eslint-config-loopback": "^8.0.0",
     "nodemon": "^1.18.10"
   },
