@@ -18,7 +18,7 @@
   "dependencies": {
     "apidoc": "^0.17.7",
     "aws-sdk": "^2.518.0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "bluebird": "^3.5.5",
     "body-parser": "^1.18.3",
     "compression": "^1.0.3",
