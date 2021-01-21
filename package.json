@@ -52,7 +52,7 @@
     "serve-favicon": "^2.0.1",
     "sharp": "^0.22.1",
     "slack-webhook": "^1.0.0",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.4.0",
     "strong-error-handler": "^2.0.0",
     "twilio": "^3.30.1",
     "uuid": "^3.3.2",
